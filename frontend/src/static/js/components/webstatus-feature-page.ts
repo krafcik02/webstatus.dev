@@ -60,14 +60,14 @@ import {WebStatusDataObj} from './webstatus-gchart.js';
 import {NotFoundError} from '../api/errors.js';
 
 /** Generate a key for featureSupport. */
-function featureSupportKey(
+export function featureSupportKey(
   browser: BrowsersParameter,
   channel?: ChannelsParameter,
 ): string {
   return `${browser}-${channel}`;
 }
 
-function isValidDate(d: Date): boolean {
+export function isValidDate(d: Date): boolean {
   return !isNaN(d.getTime());
 }
 

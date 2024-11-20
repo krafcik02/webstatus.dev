@@ -37,3 +37,13 @@ describe('openColumnsDialog', () => {
     assert.exists(component);
   });
 });
+
+describe('openColumnsDialog & hide', () => {
+  it('can add dialog to the page, open it and close', async () => {
+    const loc = {search: ''};
+    const component = await openColumnsDialog(loc);
+    assert.exists(component);
+    component.hide();
+    assert.isFalse(component === null || component === undefined);
+  });
+});

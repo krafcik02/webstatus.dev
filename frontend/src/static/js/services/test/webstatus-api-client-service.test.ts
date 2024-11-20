@@ -18,11 +18,27 @@ import {consume} from '@lit/context';
 import {assert, fixture, html} from '@open-wc/testing';
 import {LitElement, render} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-
 import {apiClientContext} from '../../contexts/api-client-context.js';
 import '../webstatus-api-client-service.js';
 import {type WebstatusAPIClientService} from '../webstatus-api-client-service.js';
 import {APIClient} from '../../api/client.js';
+
+describe('webstatus-api-client-service', () => {
+  let apiUrl = 'http://localhost';
+  it('can update the apiClient when the url changes', async () => {
+    const component = await fixture<WebstatusAPIClientService>(
+      html`<webstatus-api-client-service url=${apiUrl}>
+      </webstatus-api-client-service>`
+    );
+    assert.isUndefined(component.apiClient);
+    assert.equal(component.url, 'http://localhost');
+    assert.exists(component.apiClient);
+    apiUrl = 'http://localhost/test';
+
+    assert.equal(component.url, 'http://localhost/test');
+    assert.exists(component.apiClient);
+  });
+});
 
 describe('webstatus-api-client-service', () => {
   const apiUrl = 'http://localhost';

@@ -16,10 +16,16 @@
 
 import {expect, fixture, html} from '@open-wc/testing';
 import {FeaturePage} from '../webstatus-feature-page.js';
+import {isValidDate, featureSupportKey} from '../webstatus-feature-page.js';
 import '../webstatus-feature-page.js';
 import sinon from 'sinon';
-import {WPTRunMetric} from '../../api/client.js';
+import {
+  BrowsersParameter,
+  ChannelsParameter,
+  WPTRunMetric,
+} from '../../api/client.js';
 import {render} from 'lit';
+import assert from 'assert';
 
 describe('webstatus-feature-page', () => {
   let el: FeaturePage;
@@ -275,5 +281,47 @@ describe('webstatus-feature-page', () => {
         'Became available on 2024-08-07 in version 123',
       );
     });
+  });
+});
+
+describe('isValidDate', () => {
+  it('returns true for valid dates', () => {
+    const validDate = '2023-12-27T01:28:25.177Z';
+    expect(isValidDate(new Date(validDate))).to.be.true;
+  });
+
+  it('returns false for invalid dates', () => {
+    const invalidDate = '2023-12-27T01:28:25.177';
+    expect(isValidDate(new Date(invalidDate))).to.be.false;
+  });
+});
+
+describe('featureSupportKey', () => {
+  it('returns the correct key for chrome stable', () => {
+    const browser: BrowsersParameter = 'chrome';
+    const channel: ChannelsParameter = 'stable';
+    const result = featureSupportKey(browser, channel);
+    assert.equal(result, `chrome-stable`);
+  });
+
+  it('returns the correct key for firefox experimental', () => {
+    const browser: BrowsersParameter = 'firefox';
+    const channel: ChannelsParameter = 'experimental';
+    const result = featureSupportKey(browser, channel);
+    assert.equal(result, `firefox-experimental`);
+  });
+
+  it('returns the correct key for edge stable', () => {
+    const browser: BrowsersParameter = 'edge';
+    const channel: ChannelsParameter = 'stable';
+    const result = featureSupportKey(browser, channel);
+    assert.equal(result, `edge-stable`);
+  });
+
+  it('returns the correct key for safari stable', () => {
+    const browser: BrowsersParameter = 'safari';
+    const channel: ChannelsParameter = 'stable';
+    const result = featureSupportKey(browser, channel);
+    assert.equal(result, `safari-stable`);
   });
 });

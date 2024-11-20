@@ -154,7 +154,7 @@ function formatDateString(dateString: string): string {
   return formatDate(new Date(dateString));
 }
 
-function formatDate(date: Date): string {
+export function formatDate(date: Date): string {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
   const day = date.getDate().toString().padStart(2, '0'); // Days are 1-indexed

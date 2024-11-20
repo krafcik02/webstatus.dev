@@ -26,6 +26,7 @@ import {
   DEFAULT_COLUMN_OPTIONS,
   ColumnOptionKey,
   renderBaselineStatus,
+  formatDate,
 } from '../webstatus-overview-cells.js';
 import {components} from 'webstatus.dev-backend';
 import {render} from 'lit';
@@ -413,5 +414,17 @@ describe('renderBaselineStatus', () => {
       const highDateBlock = el.querySelector('.baseline-date-block-widely');
       expect(highDateBlock).to.not.exist;
     });
+  });
+});
+
+describe('check date format', () => {
+  it('can format date', async () => {
+    const formattedDate = formatDate(new Date('2000-10-12T00:00:00.000Z'));
+    assert.equal(formattedDate, '2000-10-12');
+  });
+
+  it('can format date with only year, month, and day', async () => {
+    const formattedDate = formatDate(new Date('2000-10-12'));
+    assert.equal(formattedDate, '2000-10-12');
   });
 });
